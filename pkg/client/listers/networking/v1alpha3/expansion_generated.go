@@ -34,3 +34,11 @@ type VirtualServiceListerExpansion interface{}
 // VirtualServiceNamespaceListerExpansion allows custom methods to be added to
 // VirtualServiceNamespaceLister.
 type VirtualServiceNamespaceListerExpansion interface{}
+
+// GatewayListerExpansion allows custom methods to be added to
+// GatewayLister.
+type GatewayListerExpansion interface{}
+
+// GatewayNamespaceListerExpansion allows custom methods to be added to
+// GatewayNamespaceLister.
+type GatewayNamespaceListerExpansion interface{}

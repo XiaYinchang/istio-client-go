@@ -1,5 +1,3 @@
-github.com/aspenmesh/istio-client-go v0.0.0-20181002001939-c2ad69c03a02 h1:zz1VKtfql1qyOzhOwRB0B+jyuDbKbjBb4yPBqbbYcLk=
-github.com/aspenmesh/istio-client-go v0.0.0-20181002001939-c2ad69c03a02/go.mod h1:HbtpC/r+MCS1vrS/OIs5vLVohdIh9KgX1utxg+fJ8WE=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=

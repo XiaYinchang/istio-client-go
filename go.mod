@@ -1,7 +1,6 @@
 module github.com/XiaYinchang/istio-client-go
 
 require (
-	github.com/aspenmesh/istio-client-go v0.0.0-20181002001939-c2ad69c03a02
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/gogo/protobuf v1.0.0 // indirect
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b

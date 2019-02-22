@@ -20,7 +20,7 @@ limitations under the License.
 package v1alpha3
 
 import (
-	internalinterfaces "github.com/aspenmesh/istio-client-go/pkg/client/informers/externalversions/internalinterfaces"
+	internalinterfaces "github.com/XiaYinchang/istio-client-go/pkg/client/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to all the informers in this group version.
@@ -29,6 +29,8 @@ type Interface interface {
 	DestinationRules() DestinationRuleInformer
 	// VirtualServices returns a VirtualServiceInformer.
 	VirtualServices() VirtualServiceInformer
+	// Gateways returns a GatewayInformer.
+	Gateways() GatewayInformer
 }
 
 type version struct {
@@ -50,4 +52,9 @@ func (v *version) DestinationRules() DestinationRuleInformer {
 // VirtualServices returns a VirtualServiceInformer.
 func (v *version) VirtualServices() VirtualServiceInformer {
 	return &virtualServiceInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// Gateways returns a gatewayInformer.
+func (v *version) Gateways() GatewayInformer {
+	return &gatewayInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

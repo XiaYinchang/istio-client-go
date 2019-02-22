@@ -22,8 +22,8 @@ package externalversions
 import (
 	"fmt"
 
-	v1alpha1 "github.com/aspenmesh/istio-client-go/pkg/apis/authentication/v1alpha1"
-	v1alpha3 "github.com/aspenmesh/istio-client-go/pkg/apis/networking/v1alpha3"
+	v1alpha1 "github.com/XiaYinchang/istio-client-go/pkg/apis/authentication/v1alpha1"
+	v1alpha3 "github.com/XiaYinchang/istio-client-go/pkg/apis/networking/v1alpha3"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -65,6 +65,8 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Networking().V1alpha3().DestinationRules().Informer()}, nil
 	case v1alpha3.SchemeGroupVersion.WithResource("virtualservices"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Networking().V1alpha3().VirtualServices().Informer()}, nil
+	case v1alpha3.SchemeGroupVersion.WithResource("gateways"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Networking().V1alpha3().Gateways().Informer()}, nil
 
 	}
 
