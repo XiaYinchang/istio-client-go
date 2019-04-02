@@ -27,7 +27,7 @@ require (
 	golang.org/x/text v0.3.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.2.1 // indirect
-	istio.io/api v0.0.0-20190221005854-53b11a3dc9ff
+	istio.io/api v0.0.0-20190330144030-208c0eaf7975
 	k8s.io/api v0.0.0-20180711052118-183f3326a935 // indirect
 	k8s.io/apimachinery v0.0.0-20180601181227-17529ec7eadb
 	k8s.io/client-go v0.0.0-20180627072700-e2680bfa7718
