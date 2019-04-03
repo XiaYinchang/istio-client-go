@@ -1,6 +1,6 @@
 /*
-Portions Copyright 2018 The Kubernetes Authors.
-Portions Copyright 2018 Aspen Mesh Authors.
+Portions Copyright 2019 The Kubernetes Authors.
+Portions Copyright 2019 Aspen Mesh Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ type GatewayLister interface {
 	GatewayListerExpansion
 }
 
-// GatewayLister implements the GatewayLister interface.
+// gatewayLister implements the GatewayLister interface.
 type gatewayLister struct {
 	indexer cache.Indexer
 }
@@ -89,7 +89,7 @@ func (s gatewayNamespaceLister) Get(name string) (*v1alpha3.Gateway, error) {
 		return nil, err
 	}
 	if !exists {
-		return nil, errors.NewNotFound(v1alpha3.Resource("virtualservice"), name)
+		return nil, errors.NewNotFound(v1alpha3.Resource("gateway"), name)
 	}
 	return obj.(*v1alpha3.Gateway), nil
 }

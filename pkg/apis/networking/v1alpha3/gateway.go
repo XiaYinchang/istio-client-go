@@ -32,8 +32,8 @@ type Gateway struct {
 	Spec GatewaySpec `json:"spec"`
 }
 
-func (gateway *Gateway) GetSpecMessage() proto.Message {
-	return &gateway.Spec.Gateway
+func (g *Gateway) GetSpecMessage() proto.Message {
+	return &g.Spec.Gateway
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -46,7 +46,7 @@ type GatewayList struct {
 	Items []Gateway `json:"items"`
 }
 
-// GatewaySpec is a wrapper around Istio Gateway
+// GatewaySpec is a wrapper around Istio GatewaySpec
 type GatewaySpec struct {
 	istiov1alpha3.Gateway
 }

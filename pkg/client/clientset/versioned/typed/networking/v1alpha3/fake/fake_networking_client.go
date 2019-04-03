@@ -1,6 +1,6 @@
 /*
-Portions Copyright 2018 The Kubernetes Authors.
-Portions Copyright 2018 Aspen Mesh Authors.
+Portions Copyright 2019 The Kubernetes Authors.
+Portions Copyright 2019 Aspen Mesh Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,6 +31,18 @@ type FakeNetworkingV1alpha3 struct {
 
 func (c *FakeNetworkingV1alpha3) DestinationRules(namespace string) v1alpha3.DestinationRuleInterface {
 	return &FakeDestinationRules{c, namespace}
+}
+
+func (c *FakeNetworkingV1alpha3) Gateways(namespace string) v1alpha3.GatewayInterface {
+	return &FakeGateways{c, namespace}
+}
+
+func (c *FakeNetworkingV1alpha3) ServiceEntries(namespace string) v1alpha3.ServiceEntryInterface {
+	return &FakeServiceEntries{c, namespace}
+}
+
+func (c *FakeNetworkingV1alpha3) Sidecars(namespace string) v1alpha3.SidecarInterface {
+	return &FakeSidecars{c, namespace}
 }
 
 func (c *FakeNetworkingV1alpha3) VirtualServices(namespace string) v1alpha3.VirtualServiceInterface {

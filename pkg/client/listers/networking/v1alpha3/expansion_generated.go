@@ -1,6 +1,6 @@
 /*
-Portions Copyright 2018 The Kubernetes Authors.
-Portions Copyright 2018 Aspen Mesh Authors.
+Portions Copyright 2019 The Kubernetes Authors.
+Portions Copyright 2019 Aspen Mesh Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,14 +27,6 @@ type DestinationRuleListerExpansion interface{}
 // DestinationRuleNamespaceLister.
 type DestinationRuleNamespaceListerExpansion interface{}
 
-// VirtualServiceListerExpansion allows custom methods to be added to
-// VirtualServiceLister.
-type VirtualServiceListerExpansion interface{}
-
-// VirtualServiceNamespaceListerExpansion allows custom methods to be added to
-// VirtualServiceNamespaceLister.
-type VirtualServiceNamespaceListerExpansion interface{}
-
 // GatewayListerExpansion allows custom methods to be added to
 // GatewayLister.
 type GatewayListerExpansion interface{}
@@ -42,3 +34,27 @@ type GatewayListerExpansion interface{}
 // GatewayNamespaceListerExpansion allows custom methods to be added to
 // GatewayNamespaceLister.
 type GatewayNamespaceListerExpansion interface{}
+
+// ServiceEntryListerExpansion allows custom methods to be added to
+// ServiceEntryLister.
+type ServiceEntryListerExpansion interface{}
+
+// ServiceEntryNamespaceListerExpansion allows custom methods to be added to
+// ServiceEntryNamespaceLister.
+type ServiceEntryNamespaceListerExpansion interface{}
+
+// SidecarListerExpansion allows custom methods to be added to
+// SidecarLister.
+type SidecarListerExpansion interface{}
+
+// SidecarNamespaceListerExpansion allows custom methods to be added to
+// SidecarNamespaceLister.
+type SidecarNamespaceListerExpansion interface{}
+
+// VirtualServiceListerExpansion allows custom methods to be added to
+// VirtualServiceLister.
+type VirtualServiceListerExpansion interface{}
+
+// VirtualServiceNamespaceListerExpansion allows custom methods to be added to
+// VirtualServiceNamespaceLister.
+type VirtualServiceNamespaceListerExpansion interface{}

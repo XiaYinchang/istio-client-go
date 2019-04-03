@@ -32,59 +32,59 @@ import (
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// VirtualServiceInformer provides access to a shared informer and lister for
-// VirtualServices.
-type VirtualServiceInformer interface {
+// SidecarInformer provides access to a shared informer and lister for
+// Sidecars.
+type SidecarInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1alpha3.VirtualServiceLister
+	Lister() v1alpha3.SidecarLister
 }
 
-type virtualServiceInformer struct {
+type sidecarInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
 	namespace        string
 }
 
-// NewVirtualServiceInformer constructs a new informer for VirtualService type.
+// NewSidecarInformer constructs a new informer for Sidecar type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewVirtualServiceInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredVirtualServiceInformer(client, namespace, resyncPeriod, indexers, nil)
+func NewSidecarInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredSidecarInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredVirtualServiceInformer constructs a new informer for VirtualService type.
+// NewFilteredSidecarInformer constructs a new informer for Sidecar type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredVirtualServiceInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredSidecarInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.NetworkingV1alpha3().VirtualServices(namespace).List(options)
+				return client.NetworkingV1alpha3().Sidecars(namespace).List(options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.NetworkingV1alpha3().VirtualServices(namespace).Watch(options)
+				return client.NetworkingV1alpha3().Sidecars(namespace).Watch(options)
 			},
 		},
-		&networkingv1alpha3.VirtualService{},
+		&networkingv1alpha3.Sidecar{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func (f *virtualServiceInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredVirtualServiceInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+func (f *sidecarInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewFilteredSidecarInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
-func (f *virtualServiceInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&networkingv1alpha3.VirtualService{}, f.defaultInformer)
+func (f *sidecarInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&networkingv1alpha3.Sidecar{}, f.defaultInformer)
 }
 
-func (f *virtualServiceInformer) Lister() v1alpha3.VirtualServiceLister {
-	return v1alpha3.NewVirtualServiceLister(f.Informer().GetIndexer())
+func (f *sidecarInformer) Lister() v1alpha3.SidecarLister {
+	return v1alpha3.NewSidecarLister(f.Informer().GetIndexer())
 }

@@ -15,16 +15,23 @@ limitations under the License.
 package v1alpha3
 
 import (
-	"github.com/golang/protobuf/proto"
+	"bufio"
+	"bytes"
+
+	"github.com/gogo/protobuf/jsonpb"
+	"github.com/gogo/protobuf/proto"
+
 	istiov1alpha3 "istio.io/api/networking/v1alpha3"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // +genclient
 // +genclient:noStatus
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// VirtualService is a Istio VirtualService resource
+// VirtualService is an Istio VirtualService resource
 type VirtualService struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -55,4 +62,29 @@ type VirtualServiceSpec struct {
 // Based of https://github.com/istio/istio/blob/release-0.8/pilot/pkg/config/kube/crd/types.go#L450
 func (in *VirtualServiceSpec) DeepCopyInto(out *VirtualServiceSpec) {
 	*out = *in
+}
+
+func (vs *VirtualServiceSpec) MarshalJSON() ([]byte, error) {
+	buffer := bytes.Buffer{}
+	writer := bufio.NewWriter(&buffer)
+	marshaler := jsonpb.Marshaler{}
+	err := marshaler.Marshal(writer, &vs.VirtualService)
+	if err != nil {
+		log.WithField("error", err).Error("Could not marshal VirtualServiceSpec")
+		return nil, err
+	}
+
+	writer.Flush()
+	return buffer.Bytes(), nil
+}
+
+func (vs *VirtualServiceSpec) UnmarshalJSON(b []byte) error {
+	reader := bytes.NewReader(b)
+	unmarshaler := jsonpb.Unmarshaler{}
+	err := unmarshaler.Unmarshal(reader, &vs.VirtualService)
+	if err != nil {
+		log.WithField("error", err).Error("Could not unmarshal VirtualServiceSpec")
+		return err
+	}
+	return nil
 }

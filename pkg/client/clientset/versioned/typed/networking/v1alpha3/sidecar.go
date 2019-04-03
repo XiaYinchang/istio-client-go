@@ -30,45 +30,45 @@ import (
 	rest "k8s.io/client-go/rest"
 )
 
-// GatewaysGetter has a method to return a GatewayInterface.
+// SidecarsGetter has a method to return a SidecarInterface.
 // A group's client should implement this interface.
-type GatewaysGetter interface {
-	Gateways(namespace string) GatewayInterface
+type SidecarsGetter interface {
+	Sidecars(namespace string) SidecarInterface
 }
 
-// GatewayInterface has methods to work with Gateway resources.
-type GatewayInterface interface {
-	Create(*v1alpha3.Gateway) (*v1alpha3.Gateway, error)
-	Update(*v1alpha3.Gateway) (*v1alpha3.Gateway, error)
+// SidecarInterface has methods to work with Sidecar resources.
+type SidecarInterface interface {
+	Create(*v1alpha3.Sidecar) (*v1alpha3.Sidecar, error)
+	Update(*v1alpha3.Sidecar) (*v1alpha3.Sidecar, error)
 	Delete(name string, options *v1.DeleteOptions) error
 	DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error
-	Get(name string, options v1.GetOptions) (*v1alpha3.Gateway, error)
-	List(opts v1.ListOptions) (*v1alpha3.GatewayList, error)
+	Get(name string, options v1.GetOptions) (*v1alpha3.Sidecar, error)
+	List(opts v1.ListOptions) (*v1alpha3.SidecarList, error)
 	Watch(opts v1.ListOptions) (watch.Interface, error)
-	Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha3.Gateway, err error)
-	GatewayExpansion
+	Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha3.Sidecar, err error)
+	SidecarExpansion
 }
 
-// gateways implements GatewayInterface
-type gateways struct {
+// sidecars implements SidecarInterface
+type sidecars struct {
 	client rest.Interface
 	ns     string
 }
 
-// newGateways returns a Gateways
-func newGateways(c *NetworkingV1alpha3Client, namespace string) *gateways {
-	return &gateways{
+// newSidecars returns a Sidecars
+func newSidecars(c *NetworkingV1alpha3Client, namespace string) *sidecars {
+	return &sidecars{
 		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
 
-// Get takes name of the gateway, and returns the corresponding gateway object, and an error if there is any.
-func (c *gateways) Get(name string, options v1.GetOptions) (result *v1alpha3.Gateway, err error) {
-	result = &v1alpha3.Gateway{}
+// Get takes name of the sidecar, and returns the corresponding sidecar object, and an error if there is any.
+func (c *sidecars) Get(name string, options v1.GetOptions) (result *v1alpha3.Sidecar, err error) {
+	result = &v1alpha3.Sidecar{}
 	err = c.client.Get().
 		Namespace(c.ns).
-		Resource("gateways").
+		Resource("sidecars").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
 		Do().
@@ -76,16 +76,16 @@ func (c *gateways) Get(name string, options v1.GetOptions) (result *v1alpha3.Gat
 	return
 }
 
-// List takes label and field selectors, and returns the list of Gateways that match those selectors.
-func (c *gateways) List(opts v1.ListOptions) (result *v1alpha3.GatewayList, err error) {
+// List takes label and field selectors, and returns the list of Sidecars that match those selectors.
+func (c *sidecars) List(opts v1.ListOptions) (result *v1alpha3.SidecarList, err error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
 	}
-	result = &v1alpha3.GatewayList{}
+	result = &v1alpha3.SidecarList{}
 	err = c.client.Get().
 		Namespace(c.ns).
-		Resource("gateways").
+		Resource("sidecars").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Do().
@@ -93,8 +93,8 @@ func (c *gateways) List(opts v1.ListOptions) (result *v1alpha3.GatewayList, err 
 	return
 }
 
-// Watch returns a watch.Interface that watches the requested gateways.
-func (c *gateways) Watch(opts v1.ListOptions) (watch.Interface, error) {
+// Watch returns a watch.Interface that watches the requested sidecars.
+func (c *sidecars) Watch(opts v1.ListOptions) (watch.Interface, error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -102,42 +102,42 @@ func (c *gateways) Watch(opts v1.ListOptions) (watch.Interface, error) {
 	opts.Watch = true
 	return c.client.Get().
 		Namespace(c.ns).
-		Resource("gateways").
+		Resource("sidecars").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Watch()
 }
 
-// Create takes the representation of a gateway and creates it.  Returns the server's representation of the gateway, and an error, if there is any.
-func (c *gateways) Create(gateway *v1alpha3.Gateway) (result *v1alpha3.Gateway, err error) {
-	result = &v1alpha3.Gateway{}
+// Create takes the representation of a sidecar and creates it.  Returns the server's representation of the sidecar, and an error, if there is any.
+func (c *sidecars) Create(sidecar *v1alpha3.Sidecar) (result *v1alpha3.Sidecar, err error) {
+	result = &v1alpha3.Sidecar{}
 	err = c.client.Post().
 		Namespace(c.ns).
-		Resource("gateways").
-		Body(gateway).
+		Resource("sidecars").
+		Body(sidecar).
 		Do().
 		Into(result)
 	return
 }
 
-// Update takes the representation of a gateway and updates it. Returns the server's representation of the gateway, and an error, if there is any.
-func (c *gateways) Update(gateway *v1alpha3.Gateway) (result *v1alpha3.Gateway, err error) {
-	result = &v1alpha3.Gateway{}
+// Update takes the representation of a sidecar and updates it. Returns the server's representation of the sidecar, and an error, if there is any.
+func (c *sidecars) Update(sidecar *v1alpha3.Sidecar) (result *v1alpha3.Sidecar, err error) {
+	result = &v1alpha3.Sidecar{}
 	err = c.client.Put().
 		Namespace(c.ns).
-		Resource("gateways").
-		Name(gateway.Name).
-		Body(gateway).
+		Resource("sidecars").
+		Name(sidecar.Name).
+		Body(sidecar).
 		Do().
 		Into(result)
 	return
 }
 
-// Delete takes name of the gateway and deletes it. Returns an error if one occurs.
-func (c *gateways) Delete(name string, options *v1.DeleteOptions) error {
+// Delete takes name of the sidecar and deletes it. Returns an error if one occurs.
+func (c *sidecars) Delete(name string, options *v1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
-		Resource("gateways").
+		Resource("sidecars").
 		Name(name).
 		Body(options).
 		Do().
@@ -145,14 +145,14 @@ func (c *gateways) Delete(name string, options *v1.DeleteOptions) error {
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *gateways) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
+func (c *sidecars) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
 	var timeout time.Duration
 	if listOptions.TimeoutSeconds != nil {
 		timeout = time.Duration(*listOptions.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
 		Namespace(c.ns).
-		Resource("gateways").
+		Resource("sidecars").
 		VersionedParams(&listOptions, scheme.ParameterCodec).
 		Timeout(timeout).
 		Body(options).
@@ -160,12 +160,12 @@ func (c *gateways) DeleteCollection(options *v1.DeleteOptions, listOptions v1.Li
 		Error()
 }
 
-// Patch applies the patch and returns the patched gateway.
-func (c *gateways) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha3.Gateway, err error) {
-	result = &v1alpha3.Gateway{}
+// Patch applies the patch and returns the patched sidecar.
+func (c *sidecars) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha3.Sidecar, err error) {
+	result = &v1alpha3.Sidecar{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
-		Resource("gateways").
+		Resource("sidecars").
 		SubResource(subresources...).
 		Name(name).
 		Body(data).

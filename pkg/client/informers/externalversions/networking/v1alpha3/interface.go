@@ -1,6 +1,6 @@
 /*
-Portions Copyright 2018 The Kubernetes Authors.
-Portions Copyright 2018 Aspen Mesh Authors.
+Portions Copyright 2019 The Kubernetes Authors.
+Portions Copyright 2019 Aspen Mesh Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,10 +27,14 @@ import (
 type Interface interface {
 	// DestinationRules returns a DestinationRuleInformer.
 	DestinationRules() DestinationRuleInformer
-	// VirtualServices returns a VirtualServiceInformer.
-	VirtualServices() VirtualServiceInformer
 	// Gateways returns a GatewayInformer.
 	Gateways() GatewayInformer
+	// ServiceEntries returns a ServiceEntryInformer.
+	ServiceEntries() ServiceEntryInformer
+	// Sidecars returns a SidecarInformer.
+	Sidecars() SidecarInformer
+	// VirtualServices returns a VirtualServiceInformer.
+	VirtualServices() VirtualServiceInformer
 }
 
 type version struct {
@@ -49,12 +53,22 @@ func (v *version) DestinationRules() DestinationRuleInformer {
 	return &destinationRuleInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
+// Gateways returns a GatewayInformer.
+func (v *version) Gateways() GatewayInformer {
+	return &gatewayInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// ServiceEntries returns a ServiceEntryInformer.
+func (v *version) ServiceEntries() ServiceEntryInformer {
+	return &serviceEntryInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// Sidecars returns a SidecarInformer.
+func (v *version) Sidecars() SidecarInformer {
+	return &sidecarInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
 // VirtualServices returns a VirtualServiceInformer.
 func (v *version) VirtualServices() VirtualServiceInformer {
 	return &virtualServiceInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
-// Gateways returns a gatewayInformer.
-func (v *version) Gateways() GatewayInformer {
-	return &gatewayInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

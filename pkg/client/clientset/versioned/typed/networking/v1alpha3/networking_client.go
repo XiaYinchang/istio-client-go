@@ -1,6 +1,6 @@
 /*
-Portions Copyright 2018 The Kubernetes Authors.
-Portions Copyright 2018 Aspen Mesh Authors.
+Portions Copyright 2019 The Kubernetes Authors.
+Portions Copyright 2019 Aspen Mesh Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,8 +29,10 @@ import (
 type NetworkingV1alpha3Interface interface {
 	RESTClient() rest.Interface
 	DestinationRulesGetter
-	VirtualServicesGetter
 	GatewaysGetter
+	ServiceEntriesGetter
+	SidecarsGetter
+	VirtualServicesGetter
 }
 
 // NetworkingV1alpha3Client is used to interact with features provided by the networking.istio.io group.
@@ -42,12 +44,20 @@ func (c *NetworkingV1alpha3Client) DestinationRules(namespace string) Destinatio
 	return newDestinationRules(c, namespace)
 }
 
-func (c *NetworkingV1alpha3Client) VirtualServices(namespace string) VirtualServiceInterface {
-	return newVirtualServices(c, namespace)
-}
-
 func (c *NetworkingV1alpha3Client) Gateways(namespace string) GatewayInterface {
 	return newGateways(c, namespace)
+}
+
+func (c *NetworkingV1alpha3Client) ServiceEntries(namespace string) ServiceEntryInterface {
+	return newServiceEntries(c, namespace)
+}
+
+func (c *NetworkingV1alpha3Client) Sidecars(namespace string) SidecarInterface {
+	return newSidecars(c, namespace)
+}
+
+func (c *NetworkingV1alpha3Client) VirtualServices(namespace string) VirtualServiceInterface {
+	return newVirtualServices(c, namespace)
 }
 
 // NewForConfig creates a new NetworkingV1alpha3Client for the given config.
